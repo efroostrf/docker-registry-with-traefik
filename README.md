@@ -61,6 +61,7 @@ Your registry is now available at `https://your-domain.com`
 
 | Variable | Description | Default |
 |----------|-------------|---------|
+| `DOCKER_SOCK` | Docker socket path | `/var/run/docker.sock` |
 | `DOMAIN` | Your domain name | `example.com` |
 | `TRAEFIK_IMAGE` | Traefik Docker image | `traefik:3.6.4` |
 | `REGISTRY_IMAGE` | Registry Docker image | `registry:2` |
@@ -228,7 +229,17 @@ curl -u username:password https://your-domain.com/v2/
 
 ### Rootless Docker setup
 
-If you're running Docker in rootless mode, you may encounter errors binding to ports 80 and 443 (privileged ports). To fix this:
+If you're running Docker in rootless mode, configure the socket path in `.env`:
+
+```bash
+# Find your user ID
+id -u
+
+# Set the socket path (replace 1000 with your user ID)
+DOCKER_SOCK=/run/user/1000/docker.sock
+```
+
+If you encounter errors binding to ports 80 and 443 (privileged ports), fix this:
 
 1. Edit `/etc/sysctl.conf`:
 

@@ -32,7 +32,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${DOCKER_SOCK}:/var/run/docker.sock:ro
       - letsencrypt_data:/letsencrypt:rw
       - ./.htpasswd:/auth/htpasswd:ro
     networks:
